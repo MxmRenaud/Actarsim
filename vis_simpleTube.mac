@@ -253,6 +253,7 @@
 #/vis/scene/add/axes 0 0 0 0.1 m
 /vis/scene/add/trajectories
 /vis/scene/add/hits
+# /tracking/storeTrajectory 0
 #
 # RUN: number of events
 #

@@ -54,12 +54,14 @@ private:
   G4LogicalVolume* AlplateLog;    ///< Pointer to logic aluminium plate
   G4LogicalVolume* DiamondLog;    ///< Pointer to logic Diamond detector
   G4LogicalVolume* SupportLog;    ///< Pointer to logic CageField support
+  G4LogicalVolume* cylFrameLog;   ///< Pointer to logic SpecMAT CylindreFrame
 
   G4VPhysicalVolume* worldPhys;   ///< Pointer to physical world
   G4VPhysicalVolume* chamberPhys; ///< Pointer to physical chamber
   G4VPhysicalVolume* AlplatePhys; ///< Pointer to physical Al plate
   G4VPhysicalVolume* DiamondPhys; ///< Pointer to physical Diamond detector
   G4VPhysicalVolume* SupportPhys; ///< Pointer to physical CageField support
+  G4VPhysicalVolume* cylFramePhys;///< Pointer to physical SpecMAT CylindreFrame
 
   //Assembly of slits
   //G4AssemblyVolume* SlitMask;  //NOT USED IN THIS FILE

@@ -609,7 +609,7 @@ G4VPhysicalVolume* ActarSimDetectorConstruction::ConstructActarTPCDEMO() {
 ///   A-The World Volume is a box with user-specified dimensions
 ///     (default HALF LENGTHS are 1.0m x 1.0m x 1.0m defined in the constructor)
 ///
-///   B-The scattering chamber is .... still to be defined (tube or hexagonal prism)
+///   B-The scattering chamber is .... most likely a tube (tube or hexagonal prism)
 ///
 ///   C-Hard-coded Sub-volumes and ancillaries:
 ///
@@ -620,10 +620,12 @@ G4VPhysicalVolume* ActarSimDetectorConstruction::ConstructActarTPCDEMO() {
 ///   The Analysis is eventually configured according to the implemented geometry.
 ///
 ///   Returns a pointer to the world's physical volume.
-G4VPhysicalVolume* ActarSimDetectorConstruction::ConstructSpecMAT() {
+G4VPhysicalVolume* ActarSimDetectorConstruction::ConstructSpecMAT() { //TODO TODO TODO TODO TODO
   //--------------------------
-  //World Volume
+  //World Volume 
   //--------------------------
+//     Using default sizes for World and Chamber
+
 
   solidWorld = new G4Box("World",                //its name
 			 worldSizeX,worldSizeY,worldSizeZ);  //its size
@@ -643,11 +645,72 @@ G4VPhysicalVolume* ActarSimDetectorConstruction::ConstructSpecMAT() {
   //--------------------------
   //Scattering Chamber
   //--------------------------
+  //ALERT the scattering chamber is mother to most other volumes! (Except Scintillators)
+  //ALERT Check if a daughter volume can be outside the boundaries of the volume - IT CAN'T !
+  //ALERT If not, will need to keep the box and shove our chamber in - IT HAS TO !!
+  
+  //Chamber X,Y,Z Center
+  chamberCenterX = 0.*m;
+  chamberCenterY = 0.*m;                      
+  chamberCenterZ = 0.*m;  
+  
+  G4Box* solidChamber = new G4Box("Chamber",         //its name
+				  chamberSizeX,chamberSizeY,chamberSizeZ);   //its size
+  
+  SetChamberMaterial("Galactic");
+  
+  chamberLog = new G4LogicalVolume(solidChamber, //its solid
+						    chamberMaterial,
+						    "Chamber");            //its name
+
+  chamberPhys = new G4PVPlacement(0,                     //no rotation
+						     G4ThreeVector(chamberCenterX,
+								   chamberCenterY,
+								   chamberCenterZ),
+						     chamberLog,            //its logical volume
+						     "Chamber",             //its name
+						     worldLog,              //its mother  volume
+						     false,                 //no boolean operation
+						     0);                    //copy number
+
+  if(chamberPhys){;}
+  
+  //--------------------------
+  //Cylindrical external Frame
+  //--------------------------
+    //TODO needed ? YES ! Make it a subtraction ? YES ? 
+    //TODO create those in the appropriate .hh
+  
+  
+  //TODO replace hard values by changeable variables
+  G4Tubs* solidCylindreFrame = new G4Tubs("CylindreTemp"  //its name
+                        0.,                               //inner rad,= outer rad of gas
+                        radiusGasTub+3.*mm,               //outer rad,= inner + thickness of frame
+                        lengthGasTub+5.*um,               //...+1/2 of entrance thickness ?
+                        0.,                               //starting angle for revolution solid
+                        2.*M_PI);                         //angle of revolution solid
+  
+  cylFrameLog = new G4LogicalVolume(solidCylindreFrame,  //its solid
+                                         Al,                  //made out of Aluminium
+                                         "CylindreFrame");    //its name
+  
+  cylFramePhys = new G4PVPlacement(0,                     //no rotation
+						     G4ThreeVector(chamberCenterX,
+								   chamberCenterY,
+								   chamberCenterZ),
+						     cylFrameLog,      //its logical volume
+						     "CylindreFrame",       //its name
+						     chamberLog,            //its mother  volume
+						     false,                 //no boolean operation
+						     0);                    //copy number
+  
 
   //--------------------------
   //Gas Volume
   //--------------------------
-
+  if(gasGeoIncludedFlag=="on")                      //TODO check where that flag needs init-ing
+    gasDet->Construct(chamberLog);
+  
   //--------------------------
   //Array of scintillation detectors
   //--------------------------

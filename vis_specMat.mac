@@ -1,0 +1,174 @@
+################################################################
+#*-- AUTHOR : Hector Alvarez-Pol
+#*-- Date: 01/2016
+#*-- Last Update: 15/01/16
+#*-- Copyright: GENP (Univ. Santiago de Compostela)
+# --------------------------------------------------------------
+# Comments:
+# - Updated macro with the available options for ActarSim control.
+#   Available from the "G4file" menu in an ActarSim interactive
+#   (only for Qt) session. Please, modify values, comment and
+#   uncomment commands but do not modify the order or remove comments.
+#   SIMPLETUBE case: a simple tube geometry.
+#	
+#	- 04/2017 : modifications for SpecMAT sims (M.Renaud)
+#	
+################################################################
+#
+# VERBOSITY AND HISTORY CONTROL
+# verbosity levels and saveHistory (commands that do not belong to ACTARSIM)
+/control/verbose 1
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/control/saveHistory
+# MODULAR PHYSICS CONTROL
+# Setting the Physics modules; valid values are here listed:
+#   em: standard, lowenergy, penelope, (choose one from this three)
+#   common: decay,
+#   hadronic: elastic, binary, binary_ion, gamma_nuc,
+#   ion low-energy: ion-LowE, ion-LowE-ziegler1977, ion-LowE-ziegler1985,
+#   ion-LowE-ziegler2000, ion-standard
+#   standards: emstandard_opt0, emstandard_opt3, emstandard_opt4,
+#   others: ionGasModels
+#
+#/ActarSim/phys/RemovePhysics                     #Remove all modula physics list
+#/ActarSim/phys/addPhysics standard              #Add modula physics list
+#/ActarSim/phys/addPhysics decay
+/ActarSim/phys/addPhysics elastic
+#/ActarSim/phys/addPhysics binary
+#/ActarSim/phys/addPhysics binary_ion
+#/ActarSim/phys/addPhysics gamma_nuc
+#/ActarSim/phys/addPhysics lowenergy
+#/ActarSim/phys/addPhysics ion-LowE
+#/ActarSim/phys/addPhysics ion-LowE-ziegler1977
+#/ActarSim/phys/addPhysics ion-LowE-ziegler1985
+#/ActarSim/phys/addPhysics ion-LowE-ziegler2000
+#/ActarSim/phys/addPhysics ion-standard
+#/ActarSim/phys/addPhysics penelope
+#/ActarSim/phys/addPhysics emstandard_opt0
+# /ActarSim/phys/addPhysics emstandard_opt3
+/ActarSim/phys/addPhysics emstandard_opt4                                    #Need to use OPT4, OPT3 does not respond well to magnetic fields apparently
+#/ActarSim/phys/addPhysics ionGasModels
+#
+#
+# Cuts for the particles  (incomplete list, see README)
+#
+#
+#/ActarSim/phys/setGCut 0.1                    #Set gamma cut
+#/ActarSim/phys/setECut 0.1                    #Set electron cut
+#/ActarSim/phys/setPCut 0.1                    #Set positron cut
+#/ActarSim/phys/setCuts 1 mm                   #Set cut for all
+/ActarSim/phys/verbose 2                       #Set verbose level for processes
+#
+#
+# Initialization is moved here from the main allowing PhysicsList
+#
+/run/initialize
+#
+# DETECTOR CHARACTERIZATION
+#
+# PRE-DEFINED DETECTORS (if any of this predefined detectors is on, most detector commands are not used)
+/ActarSim/det/MaikoGeoIncludedFlag off           #Includes the Maiko geometry in the simulation
+/ActarSim/det/ACTARTPCDEMOGeoIncludedFlag off    #Includes the ACTARTPC Demonstrator geometry in the simulation
+/ActarSim/det/ACTARTPCGeoIncludedFlag off        #Includes the ACTARTPC geometry in the simulation
+/ActarSim/det/SpecMATGeoIncludedFlag on          #Includes the SpecMAT geometry in the simulation
+/ActarSim/det/OthersGeoIncludedFlag off			 #Geometry is defined by user
+# 
+# Control Of The Materials (options: Galactic, Water, ...)
+/ActarSim/det/setMediumMat Air                   #Selects Material outside the Chamber.
+/ActarSim/det/setChamberMat Galactic             #Selects Material in the Chamber (but not in the gas!)
+# 
+# Electric And Magnetic Fields
+#/ActarSim/det/setEleField 0 5e-3 0               #Defines electric field
+#/ActarSim/det/setMagField 0 0 0 T                #Defines magnetic field
+# 
+# 
+#
+# GAS CHARACTERISTICS (options are H2, D2, He, Ar, CF4, CH4, iC4H10, set both in GasBox and GasChamber)
+#
+#/ActarSim/det/gas/setGasPressure 1.01325         #Select the Gas Pressure for the Gas box
+/ActarSim/det/gas/setGasPressure 0.1
+/ActarSim/det/gas/setGasTemperature 293.15        #Select the Gas Temperature for the Gas box
+#
+/ActarSim/det/gas/setGasMat D2                    #Select Material of the Gas for the Gas box
+#
+# 
+# GAS MIXTURE: first select number of elements (up to 10) and then set all gases with their ratio
+#/ActarSim/det/gas/mixture/GasMixture 2              #Set a Gas Mixture with N number of elements (default 0)
+#/ActarSim/det/gas/mixture/setGasMix 1 He 0.90       #Set a Gas Mixture for the Gas box
+#/ActarSim/det/gas/mixture/setGasMix 2 iC4H10 0.10   #Set a Gas Mixture for the Gas box
+#/ActarSim/det/gas/setGasMat GasMix                  #Set a Gas Mixture for the Gas box
+#
+#
+# 
+# 
+# SILICON DETECTOR (valid if /ActarSim/det/silGeoIncludedFlag on has been settled)
+# 
+/ActarSim/det/silGeoIncludedFlag off              #Includes the geometry of the silicons in the simulation
+#Options for Silicon and scintillator coverage:
+# 6 bits to indicate which sci wall is present (1) or absent (0)
+# order is:
+# bit1 (lsb) beam output wall                 1
+# bit2 lower (gravity based) wall             2
+# bit3 upper (gravity based) wall             4
+# bit4 left (from beam point of view) wall    8
+# bit5 right (from beam point of view) wall   16
+# bit6 (msb) beam entrance wall               32
+# examples: 63 full coverage; 3 only output and bottom walls ...
+# /ActarSim/det/sil/sideCoverage 25                #Selects the silicon coverage (default 1). See instructions above
+# /ActarSim/det/sil/xBoxHalfLength 53.8 mm         #Sets the x half length of the silicon detectors box
+# /ActarSim/det/sil/yBoxHalfLength 0. mm           #Sets the y half length of the silicon detectors box
+# /ActarSim/det/sil/zBoxHalfLength 46.8 mm         #Sets the z half length of the silicon detectors box
+# /ActarSim/det/sil/print                          #Prints geometry
+#
+# 
+# 
+# 
+# SCINTILLATOR DETECTOR (valid if /ActarSim/det/sciGeoIncludedFlag on has been settled)
+# 
+/ActarSim/det/sciGeoIncludedFlag off
+# see above explanation in the equivalent command for the Silicons
+#/ActarSim/det/sci/sideCoverage 25               #Selects the silicon coverage (default 1). See above explanation for the Silicons
+#/ActarSim/det/sci/xBoxHalfLength 150. mm        #Sets the x half length of the scintillator detectors box
+#/ActarSim/det/sci/yBoxHalfLength 150. mm        #Sets the y half length of the scintillator detectors box
+#/ActarSim/det/sci/zBoxHalfLength 150. mm        #Sets the z half length of the scintillator detectors box
+#/ActarSim/det/sci/print                         #Prints geometry
+#
+# 
+# 
+# Update is MANDATORY after any material, field or detector change
+/ActarSim/det/update                             #Updates geometry
+#/ActarSim/det/print                              #Prints geometry
+# 
+# 
+# 
+# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
