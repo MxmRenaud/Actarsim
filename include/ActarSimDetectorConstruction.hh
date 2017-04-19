@@ -54,14 +54,14 @@ private:
   G4LogicalVolume* AlplateLog;    ///< Pointer to logic aluminium plate
   G4LogicalVolume* DiamondLog;    ///< Pointer to logic Diamond detector
   G4LogicalVolume* SupportLog;    ///< Pointer to logic CageField support
-  G4LogicalVolume* cylFrameLog;   ///< Pointer to logic SpecMAT CylindreFrame
+  G4LogicalVolume* housingLog;    ///< Pointer to logic SpecMAT CylindreFrame
 
   G4VPhysicalVolume* worldPhys;   ///< Pointer to physical world
   G4VPhysicalVolume* chamberPhys; ///< Pointer to physical chamber
   G4VPhysicalVolume* AlplatePhys; ///< Pointer to physical Al plate
   G4VPhysicalVolume* DiamondPhys; ///< Pointer to physical Diamond detector
   G4VPhysicalVolume* SupportPhys; ///< Pointer to physical CageField support
-  G4VPhysicalVolume* cylFramePhys;///< Pointer to physical SpecMAT CylindreFrame
+  G4VPhysicalVolume* housingPhys; ///< Pointer to physical SpecMAT CylindreFrame
 
   //Assembly of slits
   //G4AssemblyVolume* SlitMask;  //NOT USED IN THIS FILE
@@ -87,6 +87,9 @@ private:
   G4double chamberCenterX;  ///< Chamber X Center
   G4double chamberCenterY;  ///< Chamber Y Center
   G4double chamberCenterZ;  ///< Chamber Z Center
+  
+  G4double housingThickness;        //FIXME
+  G4double housingWindowThickness;    
 
   G4String MaikoGeoIncludedFlag;        ///< Control variable for including MAIKO
   G4String ACTARTPCDEMOGeoIncludedFlag; ///< Control variable for including ACTARTPCDEMO
@@ -103,6 +106,7 @@ private:
   ActarSimSciDetectorConstruction* sciDet;          ///< Pointer to scintillator constructor
   ActarSimSciRingDetectorConstruction* sciRingDet;  ///< Pointer to sciRing for MAIKO constructor
   ActarSimPlaDetectorConstruction* plaDet;          ///< Pointer to Hodoscope constructor
+  ActarSimSpecMATSciDetectorConstruction* SpecMATSciDet; ///< Pointer to SpecMAT Scintillator constructor
 
   ActarSimDetectorMessenger* detectorMessenger;  ///< Pointer to the Messenger
 
@@ -131,6 +135,9 @@ public:
   void SetChamberCenterX(G4double val){chamberCenterX = val;}
   void SetChamberCenterY(G4double val){chamberCenterY = val;}
   void SetChamberCenterZ(G4double val){chamberCenterZ = val;}
+  
+  void SetHousingThickness(G4double val){housingThickness = val;}             //FIXME
+  void SetHousingWindowThickness(G4double val){housingWindowThickness = val;}
 
   void SetMediumMaterial(G4String);
   void SetDefaultMaterial(G4String);
@@ -173,6 +180,9 @@ public:
   G4double GetChamberCenterX(void){return chamberCenterX;}
   G4double GetChamberCenterY(void){return chamberCenterY;}
   G4double GetChamberCenterZ(void){return chamberCenterZ;}
+  
+  G4double GetHousingThickness(void){return housingThickness;}                    //FIXME
+  G4double GetHousingWindowThickness(void){return housingWindowThickness;}
 
   G4Material* GetMediumMaterial() {return mediumMaterial;};
   G4Material* GetDefaultMaterial() {return defaultMaterial;};
@@ -184,6 +194,7 @@ public:
   ActarSimSciDetectorConstruction* GetSciDetector() {return sciDet;}
   ActarSimSciRingDetectorConstruction* GetSciRingDetector() {return sciRingDet;}
   ActarSimPlaDetectorConstruction* GetPlaDetector() {return plaDet;}
+  ActarSimSpecMATSciDetectorConstruction* GetSpecMATSciDetector() {return SpecMATSciDet;}
 
   G4String GetMaikoGeoIncludedFlag(void){return MaikoGeoIncludedFlag;}
   G4String GetACTARTPCDEMOGeoIncludedFlag(void){return ACTARTPCDEMOGeoIncludedFlag;}
