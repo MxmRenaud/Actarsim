@@ -737,7 +737,7 @@ G4VPhysicalVolume* ActarSimDetectorConstruction::ConstructSpecMAT() { //TODO
   //--------------------------
   //Array of scintillation detectors
   //--------------------------
-  if(GeoIncludedFlag=="on")
+  if(SciGeoIncludedFlag=="on")
     SpecMATSciDet->Construct(chamberLog);
 
   return worldPhys;

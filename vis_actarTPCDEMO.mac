@@ -141,7 +141,7 @@
 /ActarSim/analControl/storeTrackHistos off       #Stores the tracks in Histograms
 /ActarSim/analControl/storeEvents on             #Stores the events in the output Tree
 /ActarSim/analControl/storeHistograms off        #Stores histograms in the output Tree
-/ActarSim/analControl/storeSimpleTracks off      #Stores the simple tracks in the output Tree
+/ActarSim/analControl/storeSimpleTracks on      #Stores the simple tracks in the output Tree
 #/ActarSim/analControl/setMinStrideLength 0.1     #Specifies the minimum length of the strides in the simpleTracks
 #/ActarSim/phys/stepMax 1000000.                  #Set max allowed step length for the default region
 #

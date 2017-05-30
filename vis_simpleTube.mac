@@ -102,7 +102,7 @@
 /ActarSim/det/gas/setRadiusGasTub 10 cm          #Select the external radius of the Gas Tube
 /ActarSim/det/gas/setLengthGasTub 30 cm          #Select the half-length of the Gas Tube
 # Beam shield? tube or off are the only possible options
-/ActarSim/det/gas/setBeamShield off              #Sets a beam shield and selects the geometry
+/ActarSim/det/gas/setBeamShieldGeometry tube      #Sets a beam shield and selects the geometry
 /ActarSim/det/gas/setBeamShieldMat Air           #Select Material of the beam shield.
 /ActarSim/det/gas/setInnerRadiusBeamShieldTub 1 cm  #Select the external radius of the Gas Tube.
 # Printing the final status on the screen

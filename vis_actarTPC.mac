@@ -85,7 +85,7 @@
 /ActarSim/det/setChamberMat Galactic             #Selects Material in the Chamber (but not in the gas!)
 # Electric and Magnetic fields
 #/ActarSim/det/setEleField 0 5e-3 0               #Defines electric field
-#/ActarSim/det/setMagField 0 0 0 T                #Defines magnetic field
+/ActarSim/det/setMagField 0 0 2 T                #Defines magnetic field
 #
 #
 # GAS CHARACTERISTICS (options are H2, D2, He, Ar, CF4, CH4, iC4H10, set both in GasBox and GasChamber)
@@ -141,7 +141,7 @@
 /ActarSim/analControl/storeTrackHistos off       #Stores the tracks in Histograms
 /ActarSim/analControl/storeEvents on             #Stores the events in the output Tree
 /ActarSim/analControl/storeHistograms off        #Stores histograms in the output Tree
-/ActarSim/analControl/storeSimpleTracks off      #Stores the simple tracks in the output Tree
+/ActarSim/analControl/storeSimpleTracks on      #Stores the simple tracks in the output Tree
 #/ActarSim/analControl/setMinStrideLength 0.1     #Specifies the minimum length of the strides in the simpleTracks
 #/ActarSim/phys/stepMax 1000000.                  #Set max allowed step length for the default region
 #
